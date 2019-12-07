@@ -1,0 +1,24 @@
+[package]
+name = "clipboard"
+version = "0.1.0"
+authors = ["Kenichi Ishibashi"]
+license = "MIT/Apache-2.0"
+edition = "2018"
+
+[build-dependencies]
+env_logger = { version = "0.7.0", optional = true }
+anyhow = "1.0"
+wasm-bindgen-webidl = "0.2.55"
+sourcefile = "0.1"
+
+[dependencies]
+wasm-bindgen = "0.2.55"
+js-sys = "0.3.32"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  "EventTarget",
+  "Navigator",
+  "Window",
+]
