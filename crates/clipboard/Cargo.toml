@@ -18,6 +18,7 @@ js-sys = "0.3.32"
 [dependencies.web-sys]
 version = "0.3.4"
 features = [
+  "Blob",
   "EventTarget",
   "Navigator",
   "Window",

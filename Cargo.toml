@@ -18,8 +18,14 @@ clipboard = { path = "crates/clipboard" }
 [dependencies.web-sys]
 version = "0.3.4"
 features = [
+  "Blob",
   "EventTarget",
+  "Headers",
   "Navigator",
+  "Request",
+  "RequestInit",
+  "RequestMode",
+  "Response",
   "Window",
 ]
 

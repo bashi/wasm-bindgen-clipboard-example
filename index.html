@@ -1,1 +1,63 @@
-<script type="module" src="main.js"></script>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>wasm-bindgen async clipboard</title>
+</head>
+
+<body>
+  <button id="read-text-button">Read text from clipboard</button>
+  <button id="fetch-and-copy-button">Fetch image and copy to clipboard</button>
+  <button id="paste-image-button">Paste image from clipboard</button>
+  <div id="outputs"></div>
+
+  <script type="module">
+    import init, {
+      read_text_from_clipboard,
+      fetch_and_copy_to_clipboard,
+      read_blobs_from_clipboard
+    } from "./pkg/wasm_bindgen_clipboard.js";
+
+    function showText(text) {
+      const el = document.createElement('div');
+      el.style.fontFamily = 'monospace';
+      el.innerText = text;
+      document.getElementById('outputs').appendChild(el);
+    }
+
+    function showImageBlob(blob) {
+      const url = URL.createObjectURL(blob);
+      const el = new Image();
+      el.src = url;
+      document.getElementById('outputs').appendChild(el);
+    }
+
+    async function run() {
+      await init();
+
+      document.getElementById('read-text-button').addEventListener('click', async () => {
+        const text = await read_text_from_clipboard();
+        console.log('text from clipboard: ', text);
+        showText(text);
+      });
+
+      document.getElementById('fetch-and-copy-button').addEventListener('click', async () => {
+        await fetch_and_copy_to_clipboard("gopher.png");
+      });
+
+      document.getElementById('paste-image-button').addEventListener('click', async () => {
+        const blobs = await read_blobs_from_clipboard();
+        console.log('blobs from clipboard: ', blobs);
+        for (let blob of blobs) {
+          if (blob.type.indexOf('image') === 0) {
+            showImageBlob(blob);
+          }
+        }
+      });
+    }
+
+    run();
+  </script>
+</body>
+
+</html>
